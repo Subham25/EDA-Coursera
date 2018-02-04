@@ -1,0 +1,16 @@
+#plot4
+setwd("E:/")
+dat <- read.csv("E:/Example.csv")
+as.Date(dat$Date, format = "%d/%m/%Y")
+
+dat$newdate <- with(dat, as.POSIXct(paste(Date, Time), format="%d-%m-%Y %H:%M"))
+par(mfrow = c(2,2), mai = c(0.65,0.65,0.65,0.65))
+plot(dat$newdate,dat$Global_active_power, type = "l", ylab = "Global Active Power", xlab='')
+plot(dat$newdate, dat$Voltage, xlab = "datetime", ylab = "Voltage", type = "l")
+plot(dat$newdate,dat$Sub_metering_1, type = "l", xlab='', ylab = "Energy sub metering")
+lines(dat$newdate, dat$Sub_metering_2, col= "Red")
+lines(dat$newdate, dat$Sub_metering_3, col= "Blue")
+legend("topright", c("Sub_Metering_1", "Sub_Metering_2", "Sub_Metering_3"), lty = c(1,1,1), col = c("Black","Red","Blue"), y.intersp = 0.68, cex = 0.7)
+plot(dat$newdate, dat$Global_reactive_power,xlab = "datetime", ylab = "Global_reactive_power", type = "l" )
+dev.copy(png,'plot4.png')
+dev.off()
